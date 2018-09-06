@@ -2118,6 +2118,30 @@ fi
 %doc rpm.doc/gfortran/*
 %endif
 
+%files -n libgfortran
+%defattr(-,root,root,-)
+%{_prefix}/%{_lib}/libgfortran.so.3*
+
+%files -n libgfortran-static
+%defattr(-,root,root,-)
+%dir %{_prefix}/lib/gcc
+%dir %{_prefix}/lib/gcc/%{gcc_target_platform}
+%dir %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}
+%if "%{version}" != "%{gcc_version}"
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{version}
+%endif
+%ifarch sparcv9 ppc
+%dir %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/lib32
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/lib32/libgfortran.a
+%endif
+%ifarch sparc64 ppc64 ppc64p7
+%dir %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/lib64
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/lib64/libgfortran.a
+%endif
+%ifnarch sparcv9 sparc64 ppc ppc64 ppc64p7
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/libgfortran.a
+%endif
+
 %if %{build_libquadmath}
 %if 0%{!?scl:1}
 %files -n libquadmath
