@@ -1131,25 +1131,39 @@ cp -a %{gcc_target_platform}/libstdc++-v3/src/.libs/libstdc++_nonshared%{nonshar
 %if %{build_fortran}
 %if 0%{?rhel} >= 7
 ar cruv $FULLPATH/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/libgfortran.so.3
 %ifarch sparcv9 ppc
 ar cruv $FULLPATH/64/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/64/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/64/libgfortran.so.3
 %endif
 %ifarch %{multilib_64_archs}
 ar cruv $FULLPATH/32/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/32/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/32/libgfortran.so.3
 %endif
 %else
 cp -a %{gcc_target_platform}/libgfortran/.libs/libgfortran_nonshared.a \
   $FULLPATH/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/libgfortran.so.3
 %ifarch sparcv9 ppc
 cp -a %{gcc_target_platform}/64/libgfortran/.libs/libgfortran_nonshared.a \
   $FULLPATH/64/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/64/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/64/libgfortran.so.3
 %endif
 %ifarch %{multilib_64_archs}
 cp -a %{gcc_target_platform}/32/libgfortran/.libs/libgfortran_nonshared.a \
   $FULLPATH/32/libgfortran_nonshared.a
+cp -a %{gcc_target_platform}/32/libgfortran/.libs/libgfortran.so.3 \
+  $FULLPATH/32/libgfortran.so.3
 %endif
 %endif
 %endif
+
+cp -a %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_version}/libgfortran.so.3 %{_prefix}/%{_lib}/
 
 pushd $FULLPATH
 echo '/* GNU ld script */
